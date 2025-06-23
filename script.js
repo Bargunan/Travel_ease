@@ -1,5 +1,5 @@
 // API Configuration
-const API_BASE_URL = 'http://localhost:3000/api';
+const API_BASE_URL = 'https://travel-ease-backend-l1wr.onrender.com';
 
 // API Helper Functions
 class TravelEaseAPI {
