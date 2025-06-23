@@ -1,0 +1,275 @@
+<!-- Update your index.html with these enhancements -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>TravelEase - Solo Travel Made Simple</title>
+    
+    <!-- Responsive meta tags -->
+    <meta name="description" content="Find safe accommodations and connect with fellow solo travelers in India">
+    <meta name="theme-color" content="#667eea">
+    
+    <!-- Prevent zoom on input focus (iOS) -->
+    <meta name="format-detection" content="telephone=no">
+    
+    <!-- CSS Custom Properties for responsive design -->
+    <style>
+        :root {
+            --vh: 1vh; /* Will be set by JavaScript for mobile viewport fix */
+            --header-height: 80px;
+            --mobile-header-height: 60px;
+        }
+        
+        @media (max-width: 768px) {
+            :root {
+                --header-height: var(--mobile-header-height);
+            }
+        }
+    </style>
+    
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Header with improved mobile navigation -->
+    <header>
+        <nav class="container">
+            <a href="#" class="logo">TravelEase</a>
+            
+            <!-- Desktop Navigation -->
+            <div class="nav-links">
+                <a href="#search">Search</a>
+                <a href="#accommodations">Stays</a>
+                <a href="#travelers">Connect</a>
+                <a href="#about">About</a>
+            </div>
+            
+            <!-- Mobile menu button will be inserted here by JavaScript -->
+            
+            <!-- User Menu -->
+            <div class="user-menu">
+                <button class="btn btn-secondary" onclick="showLogin()">Login</button>
+                <button class="btn btn-primary" onclick="showSignup()">Sign Up</button>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        <!-- Hero Section - optimized for mobile -->
+        <section class="hero">
+            <div class="container">
+                <h1>Solo Travel Made Simple & Safe</h1>
+                <p>Find perfect accommodations, connect with fellow travelers, and explore India with confidence</p>
+            </div>
+        </section>
+
+        <!-- Search Section - mobile-first design -->
+        <section id="search" class="container">
+            <div class="search-section">
+                <form class="search-form" onsubmit="searchAccommodations(event)">
+                    <div class="form-group">
+                        <label for="destination">Where to?</label>
+                        <input type="text" 
+                               id="destination" 
+                               placeholder="City or destination" 
+                               autocomplete="address-level2"
+                               required>
+                    </div>
+                    <div class="form-group">
+                        <label for="checkin">Check-in</label>
+                        <input type="date" 
+                               id="checkin" 
+                               required>
+                    </div>
+                    <div class="form-group">
+                        <label for="checkout">Check-out</label>
+                        <input type="date" 
+                               id="checkout" 
+                               required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Search</button>
+                </form>
+            </div>
+        </section>
+
+        <!-- Connection Status - mobile optimized -->
+        <section class="container">
+            <div id="connectionStatus" class="connection-status">
+                <span id="statusText">Connecting to backend...</span>
+                <span id="statusIndicator" class="status-indicator"></span>
+            </div>
+        </section>
+
+        <!-- Search Results - responsive grid -->
+        <section id="accommodations" class="container">
+            <div class="content-section fade-in">
+                <div class="section-header">
+                    <h2>Perfect Stays for Solo Travelers</h2>
+                    <div class="filter-section">
+                        <label for="accommodationType" class="sr-only">Filter by accommodation type</label>
+                        <select id="accommodationType" 
+                                onchange="filterAccommodations(this.value)"
+                                aria-label="Filter accommodations">
+                            <option value="all">All Types</option>
+                            <option value="hostel">Hostels</option>
+                            <option value="hotel">Hotels</option>
+                            <option value="guesthouse">Guesthouses</option>
+                            <option value="homestay">Homestays</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="section-content">
+                    <div class="loading" id="loadingAccommodations">
+                        <div class="spinner"></div>
+                        <p>Finding perfect stays for you...</p>
+                    </div>
+                    <div class="accommodation-grid" id="accommodationGrid">
+                        <!-- Accommodation cards will be populated here -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Traveler Connections - mobile optimized -->
+        <section id="travelers" class="container">
+            <div class="content-section fade-in">
+                <div class="section-header">
+                    <h2>Fellow Travelers Going Your Way</h2>
+                    <button class="btn btn-secondary" onclick="showTravelerForm()">Join the Journey</button>
+                </div>
+                <div class="section-content">
+                    <div class="traveler-grid" id="travelerGrid">
+                        <!-- Traveler cards will be populated here -->
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Enhanced Mobile-Friendly Modals -->
+    
+    <!-- Login Modal -->
+    <div id="loginModal" class="modal" role="dialog" aria-labelledby="loginTitle" aria-hidden="true">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="loginTitle">Welcome Back</h2>
+                <button class="close" 
+                        onclick="closeModal('loginModal')" 
+                        aria-label="Close login modal">&times;</button>
+            </div>
+            <form onsubmit="login(event)">
+                <div class="form-group">
+                    <label for="loginEmail">Email</label>
+                    <input type="email" 
+                           id="loginEmail" 
+                           autocomplete="email"
+                           required>
+                </div>
+                <div class="form-group">
+                    <label for="loginPassword">Password</label>
+                    <input type="password" 
+                           id="loginPassword" 
+                           autocomplete="current-password"
+                           required>
+                </div>
+                <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 1rem;">
+                    Login
+                </button>
+            </form>
+            <p style="text-align: center; margin-top: 1rem;">
+                Don't have an account? 
+                <a href="#" onclick="showSignup(); closeModal('loginModal');">Sign up</a>
+            </p>
+        </div>
+    </div>
+
+    <!-- Signup Modal -->
+    <div id="signupModal" class="modal" role="dialog" aria-labelledby="signupTitle" aria-hidden="true">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="signupTitle">Join TravelEase</h2>
+                <button class="close" 
+                        onclick="closeModal('signupModal')" 
+                        aria-label="Close signup modal">&times;</button>
+            </div>
+            <form onsubmit="signup(event)">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="signupName">Full Name</label>
+                        <input type="text" 
+                               id="signupName" 
+                               autocomplete="name"
+                               required>
+                    </div>
+                    <div class="form-group">
+                        <label for="signupAge">Age</label>
+                        <input type="number" 
+                               id="signupAge" 
+                               min="18" 
+                               max="100" 
+                               required>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="signupEmail">Email</label>
+                        <input type="email" 
+                               id="signupEmail" 
+                               autocomplete="email"
+                               required>
+                    </div>
+                    <div class="form-group">
+                        <label for="signupGender">Gender</label>
+                        <select id="signupGender" required>
+                            <option value="">Select Gender</option>
+                            <option value="female">Female</option>
+                            <option value="male">Male</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="signupPassword">Password</label>
+                    <input type="password" 
+                           id="signupPassword" 
+                           autocomplete="new-password"
+                           required>
+                </div>
+                <div class="form-row full-width">
+                    <div class="form-group">
+                        <label for="signupInterests">Interests (comma-separated)</label>
+                        <input type="text" 
+                               id="signupInterests" 
+                               placeholder="e.g. hiking, photography, food">
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 1rem;">
+                    Create Account
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Screen reader helper -->
+    <div class="sr-only" aria-live="polite" id="announcements"></div>
+
+    <script src="script.js"></script>
+</body>
+</html>
+
+<!-- Additional CSS for screen reader support -->
+<style>
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+</style>
